@@ -1,9 +1,9 @@
 <?php echo $this->doctype(); ?>
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+<head>
+<meta charset="utf-8">
+        <?php echo $this->headTitle('PartyRadar')->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -19,39 +19,40 @@
         <!-- Scripts -->
         <?php echo $this->headScript()
             ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-            ->prependFile($this->basePath() . '/js/jquery-1.11.1.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js')
             ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
 
     </head>
-    <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>">
-                        Party Radar
-                    </a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>
-        <div class="container">
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span	class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" style="padding: 13px;"
+					href="<?php echo $this->url('home') ?>">PartyRadar</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				    <?php
+
+						$container = $this->navigation('navigation')->getContainer();
+						echo $this->bootstrapMenu($container)->setUlClass('nav navbar-nav')->escapeLabels(false);
+					?>
+			    </div>
+			<!-- /.navbar-collapse -->
+		</div>
+	</nav>
+	<div class="container">
+        	<?php
+				echo $this->flashMessenger()->renderAll();
+			?>
             <?php echo $this->content; ?>
-        </div> <!-- /container -->
-        <footer class="container">
             <hr>
-            <p class="pull-right">&copy; <?php echo date('Y') ?> by PartyRadar. <?php echo $this->translate('All rights reserved.') ?></p>
-        </footer>
-        <?php echo $this->inlineScript() ?>
-    </body>
+		<footer> </footer>
+	</div>
+	<!-- /container -->
+</body>
 </html>
