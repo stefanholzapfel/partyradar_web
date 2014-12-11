@@ -9,7 +9,7 @@ use Zend\Form\FormInterface;
 
 /**
  *
- * @author AT21572
+ * @author Julian Walter
  *
  */
 class FormRow extends ZfFormRow {
@@ -36,7 +36,14 @@ class FormRow extends ZfFormRow {
 	public function render(ElementInterface $element) {
 		// helper
 		$errorHelper = $this->getElementErrorsHelper();
-		$labelHelper = $this->getLabelHelper();
+		if($element->getLabel() == FALSE) {
+			$labelHelper = FALSE;
+			$inputWrapClass = $this->horizontalInputWrapClass;
+		} else {
+			$labelHelper = $this->getLabelHelper();
+			$inputWrapClass = $this->horizontalInputWrapClass;
+		}
+
 		$elementHelper = $this->getElementHelper();
 		// class
 		$wrapClass = '';
@@ -59,9 +66,9 @@ class FormRow extends ZfFormRow {
 					$wrapClass .= ' ' . $this->errorClass;
 				}
 				if($element->getAttribute('type') == 'submit' || $element->getAttribute('type') == 'button') {
-					return sprintf($this->horizontalWrap, $wrapClass, '', $this->horizontalSubmitWrapClass, $elementHelper($element), '');
+					return sprintf($this->horizontalWrap, $wrapClass, '', $inputWrapClass, $elementHelper($element), '');
 				} else {
-					return sprintf($this->horizontalWrap, $wrapClass, $labelHelper($element), $this->horizontalInputWrapClass, $elementHelper($element), $errorHtml);
+					return sprintf($this->horizontalWrap, $wrapClass, $labelHelper !== FALSE ? $labelHelper($element) : '', $inputWrapClass, $elementHelper($element), $errorHtml);
 				}
 
 			case 'form-inline' :
@@ -75,15 +82,19 @@ class FormRow extends ZfFormRow {
 				if($element->getAttribute('type') == 'submit' || $element->getAttribute('type') == 'button') {
 					return sprintf($this->defaultWrap, $wrapClass, '', $elementHelper($element), $errorHtml);
 				} else {
-					return sprintf($this->defaultWrap, $wrapClass, $labelHelper($element), $elementHelper($element), $errorHtml);
+					return sprintf($this->defaultWrap, $wrapClass, $labelHelper !== FALSE ? $labelHelper($element) : '', $elementHelper($element), $errorHtml);
 				}
 			default :
 				$errorHtml = $errorHelper($element);
 				if (! empty($errorHtml)) {
 					$wrapClass .= ' ' . $this->errorClass;
 				}
-				return sprintf($this->defaultWrap, $wrapClass, $labelHelper($element), $elementHelper($element), $errorHtml);
+				return sprintf($this->defaultWrap, $wrapClass, $labelHelper !== FALSE ? $labelHelper($element) : '', $elementHelper($element), $errorHtml);
 		}
+	}
+
+	protected function getEmptyLabel() {
+
 	}
 
 	protected function setHorizontalClass(FormInterface $form) {
