@@ -19,24 +19,45 @@ class AuthController extends AbstractActionController {
 	}
 
 	public function loginAction() {
-		if($this->request->isPost()) {
+		if ($this->request->isPost()) {
 			/* @var $me \ReverseOAuth2\Client\PartyRadar */
 			$me = $this->getServiceLocator()->get('ReverseOAuth2\PartyRadar');
 			$auth = new AuthenticationService();
 
-			if($me->getToken($this->request)) {
+			if ($me->getToken($this->request)) {
 				$token = $me->getSessionToken();
 			} else {
 				$token = $me->getError();
 			}
+			/*  @var $adapter \ReverseOAuth2\Authentication\Adapter\ReverseOAuth2 */
+			$adapter = $this->getServiceLocator()->get('ReverseOAuth2\Auth\Adapter');
+			$adapter->setOAuth2Client($me);
+			$rs = $auth->authenticate($adapter);
+
+			if (!$rs->isValid()) {
+				//print errors...
+			}
 
 			$info = $me->getInfo();
 
-			$view = array('token' => $token, 'info' => $info, 'error' => $me->getError());
-
+			$view = array(
+				'token' => $token,
+				'info' => $info,
+				'error' => $me->getError()
+			);
 
 			return $view;
 		}
+	}
+
+	public function logoutAction() {
+		session_start();
+	    session_unset();
+	    session_destroy();
+	    session_write_close();
+	    setcookie(session_name(),'',0,'/');
+	    session_regenerate_id(true);
+		$this->redirect()->toRoute('auth');
 	}
 }
 

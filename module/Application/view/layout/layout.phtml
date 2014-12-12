@@ -37,9 +37,11 @@
 			</div>
 			<div class="collapse navbar-collapse">
 				    <?php
-
-						$container = $this->navigation('navigation')->getContainer();
-						echo $this->bootstrapMenu($container)->setUlClass('nav navbar-nav')->escapeLabels(false);
+				    	$auth = new Zend\Authentication\AuthenticationService();
+				    	if($auth->hasIdentity()) {
+				    		$container = $this->navigation('navigation')->getContainer();
+				    		echo $this->bootstrapMenu($container)->setUlClass('nav navbar-nav')->escapeLabels(false);
+				    	}
 					?>
 			    </div>
 			<!-- /.navbar-collapse -->
