@@ -1,33 +1,35 @@
 <?php
 
 return array(
-    
+
     'service_manager' => array(
-        
+
         'factories' => array(
-            
+
             'ReverseOAuth2\Google' => 'ReverseOAuth2\Client\GoogleFactory',
-            
+
             'ReverseOAuth2\LinkedIn' => 'ReverseOAuth2\Client\LinkedInFactory',
 
             'ReverseOAuth2\Github' => 'ReverseOAuth2\Client\GithubFactory',
-            
-            'ReverseOAuth2\Facebook' => 'ReverseOAuth2\Client\FacebookFactory'
-            
+
+            'ReverseOAuth2\Facebook' => 'ReverseOAuth2\Client\FacebookFactory',
+
+        	'ReverseOAuth2\PartyRadar' => 'ReverseOAuth2\Client\PartyRadarFactory',
+
         ),
-        
+
         'invokables' => array(
-            'ReverseOAuth2\Auth\Adapter' => 'ReverseOAuth2\Authentication\Adapter\ReverseOAuth2',  
+            'ReverseOAuth2\Auth\Adapter' => 'ReverseOAuth2\Authentication\Adapter\ReverseOAuth2',
         ),
-        
+
     ),
-    
+
     'reverseoauth2' => array(
-        
+
         'google' => array(
             'scope' => array(
                 'https://www.googleapis.com/auth/userinfo.profile',
-                'https://www.googleapis.com/auth/userinfo.email'   
+                'https://www.googleapis.com/auth/userinfo.email'
              ),
             'auth_uri'      => 'https://accounts.google.com/o/oauth2/auth',
             'token_uri'     => 'https://accounts.google.com/o/oauth2/token',
@@ -36,7 +38,7 @@ return array(
             'client_secret' => 'your secret',
             'redirect_uri'  => 'your callback url which links to your controller',
         ),
-        
+
         'facebook' => array(
             'scope' => array(
                 /*
@@ -54,7 +56,7 @@ return array(
             'client_secret' => 'your secret',
             'redirect_uri'  => 'your callback url which links to your controller',
         ),
-            
+
         'github' => array(
             'scope' => array(
                 /*
@@ -92,7 +94,12 @@ return array(
             'client_secret' => 'your api secret',
             'redirect_uri'  => 'your callback url which links to your controller',
         ),
-
+		'partyradar' => array(
+			'scope' => array(),
+			//'auth_uri'      => 'http://localhost:51459/Token',
+			'token_uri'     => 'http://localhost:51459/Token',
+			'info_uri'      => 'http://localhost:51459/api/Account/UserInfo',
+		),
     )
-    
+
 );

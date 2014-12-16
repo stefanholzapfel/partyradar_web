@@ -25,6 +25,11 @@ return array(
 				'label' => 'Home',
 				'route' => 'home',
 			),
+			array(
+				'label' => 'Logout',
+				'route' => 'auth',
+				'action' => 'logout'
+			),
 		),
 	),
 );
