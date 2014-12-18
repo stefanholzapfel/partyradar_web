@@ -2,7 +2,7 @@
 return array(
     // This should be an array of module namespaces used in the application.
     'modules' => array(
-        'Application','Authentication', 'Bootstrap', 'ReverseOAuth2',
+        'Application','Authentication', 'Bootstrap', 'ReverseOAuth2','Party',
     ),
 
     // These are various options for the listeners attached to the ModuleManager
@@ -13,7 +13,7 @@ return array(
         // Module class.
         'module_paths' => array(
             './module',
-            './vendor','./module',
+            './vendor','./module','./module',
         ),
 
         // An array of paths from which to glob configuration files after

@@ -15,6 +15,44 @@ class PartyRadar extends AbstractOAuth2Client {
 		return $url;
 	}
 
+	public function getEvents() {
+		if(!isset($this->session->token)) {
+			throw new \Exception('not authenticated for this action');
+		} else {
+			$client = $this->getHttpclient()
+			->resetParameters(true)
+			->setHeaders(array(
+				'Authorization' => 'Bearer ' . $this->session->token->access_token,
+			))
+			->setMethod(Request::METHOD_GET)
+			->setUri('http://localhost:51459/api/Event');
+
+			$retVal = $client->send()->getContent();
+
+			return \Zend\Json\Decoder::decode($retVal, \Zend\Json\Json::TYPE_ARRAY);
+
+		}
+	}
+
+	public function getLocations() {
+		if(!isset($this->session->token)) {
+			throw new \Exception('not authenticated for this action');
+		} else {
+			$client = $this->getHttpclient()
+				->resetParameters(true)
+				->setHeaders(array(
+					'Authorization' => 'Bearer ' . $this->session->token->access_token
+				))
+				->setMethod(Request::METHOD_GET)
+				->setUri('http://localhost:51459/api/Location');
+
+			$retVal = $client->send()->getContent();
+
+			return \Zend\Json\Decoder::decode($retVal, \Zend\Json\Json::TYPE_ARRAY);
+
+		}
+	}
+
 	public function getToken(Request $request) {
 		if(isset($this->session->token)) {
 
@@ -37,6 +75,7 @@ class PartyRadar extends AbstractOAuth2Client {
 			$client->setEncType('application/x-www-form-urlencoded');
 
 			$retVal = $client->send()->getContent();
+
 			$token = \Zend\Json\Decoder::decode($retVal, \Zend\Json\Json::TYPE_ARRAY);
 
 			if(is_array($token) AND isset($token['access_token']) AND $token['expires_in'] > 0) {
@@ -49,11 +88,11 @@ class PartyRadar extends AbstractOAuth2Client {
 				try {
 
 					$error = \Zend\Json\Decoder::decode($retVal);
+
 					$this->error = array(
 						'internal-error' => 'PartyRadar internal error.',
-						'message' => $error->error->message,
-						'type' => $error->error->type,
-						'code' => $error->error->code
+						'message' => $error->error_description,
+						'type' => $error->error
 					);
 
 				} catch(\Zend\Json\Exception\RuntimeException $e) {
