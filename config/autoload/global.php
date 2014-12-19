@@ -26,6 +26,14 @@ return array(
 				'route' => 'home',
 			),
 			array(
+				'label' => 'Locations',
+				'route' => 'party/location',
+			),
+			array(
+				'label' => 'Events',
+				'route' => 'party/event',
+			),
+			array(
 				'label' => 'Logout',
 				'route' => 'auth',
 				'action' => 'logout'

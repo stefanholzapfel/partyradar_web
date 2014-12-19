@@ -35,18 +35,10 @@ class AuthController extends AbstractActionController {
 			$rs = $auth->authenticate($adapter);
 
 			if (!$rs->isValid()) {
-				//print errors...
+				$this->flashMessenger()->addErrorMessage("username or password incorrect");
+				$this->redirect()->toRoute('auth');
 			}
-
-			$info = $me->getInfo();
-
-			$view = array(
-				'token' => $token,
-				'info' => $info,
-				'error' => $me->getError()
-			);
-
-			return $view;
+			$this->redirect()->toRoute('home');
 		}
 	}
 
