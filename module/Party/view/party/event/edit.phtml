@@ -1,0 +1,13 @@
+<?php
+
+$title = 'Edit Location';
+$this->headTitle($title);
+
+?>
+
+<h1><?php echo $this->escapeHtml($title) . ' - ' . $name; ?></h1>
+
+<?php
+ $form->setAttribute('action', $this->url('party/event', array('action' => 'edit', 'id' => 'id')));
+echo $this->form($form);
+?>

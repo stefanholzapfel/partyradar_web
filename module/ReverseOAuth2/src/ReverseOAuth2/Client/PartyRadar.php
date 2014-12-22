@@ -10,41 +10,37 @@ class PartyRadar extends AbstractOAuth2Client {
 	protected $providerName = 'partyradar';
 
 	public function getUrl() {
-		$url = $this->options->getTokenUri().'?'
-			. 'grant_type=password';
+		$url = $this->options->getUri();
 		return $url;
 	}
 
-	public function getEvents() {
+	/**
+	 * call
+	 *
+	 * @param string $method
+	 * @param string $api
+	 * @param string $params
+	 * @param array $additionalHeaders
+	 * @throws \Exception
+	 * @return Ambigous <\Zend\Json\mixed, NULL, \Zend\Json\$_tokenValue, multitype:, multitype:Ambigous <\Zend\Json\mixed, \Zend\Json\$_tokenValue, NULL> , stdClass, multitype:Ambigous <\Zend\Json\mixed, \Zend\Json\$_tokenValue, multitype:, multitype:Ambigous <\Zend\Json\mixed, \Zend\Json\$_tokenValue, NULL> , NULL> >
+	 *
+	 */
+	public function call($method, $api, $params = '', $additionalHeaders = array()) {
 		if(!isset($this->session->token)) {
 			throw new \Exception('not authenticated for this action');
 		} else {
+			$stdHeader = array(
+				'Authorization' => 'Bearer ' . $this->session->token->access_token,
+			);
+			if(count($additionalHeaders) > 0)
+				$headers = array_merge($stdHeader, $additionalHeaders);
+			else
+				$headers = $stdHeader;
 			$client = $this->getHttpclient()
 			->resetParameters(true)
-			->setHeaders(array(
-				'Authorization' => 'Bearer ' . $this->session->token->access_token,
-			))
-			->setMethod(Request::METHOD_GET)
-			->setUri('http://localhost:51459/api/Event');
-
-			$retVal = $client->send()->getContent();
-
-			return \Zend\Json\Decoder::decode($retVal, \Zend\Json\Json::TYPE_ARRAY);
-
-		}
-	}
-
-	public function getLocations() {
-		if(!isset($this->session->token)) {
-			throw new \Exception('not authenticated for this action');
-		} else {
-			$client = $this->getHttpclient()
-				->resetParameters(true)
-				->setHeaders(array(
-					'Authorization' => 'Bearer ' . $this->session->token->access_token
-				))
-				->setMethod(Request::METHOD_GET)
-				->setUri('http://localhost:51459/api/Location');
+			->setHeaders($headers)
+			->setMethod($method)
+			->setUri($this->getUrl() . $api . $params);
 
 			$retVal = $client->send()->getContent();
 

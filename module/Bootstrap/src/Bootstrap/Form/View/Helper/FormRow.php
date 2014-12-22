@@ -66,7 +66,7 @@ class FormRow extends ZfFormRow {
 					$wrapClass .= ' ' . $this->errorClass;
 				}
 				if($element->getAttribute('type') == 'submit' || $element->getAttribute('type') == 'button') {
-					return sprintf($this->horizontalWrap, $wrapClass, '', $inputWrapClass, $elementHelper($element), '');
+					return sprintf($this->horizontalWrap, $wrapClass, '', $this->horizontalSubmitWrapClass, $elementHelper($element), '');
 				} else {
 					return sprintf($this->horizontalWrap, $wrapClass, $labelHelper !== FALSE ? $labelHelper($element) : '', $inputWrapClass, $elementHelper($element), $errorHtml);
 				}

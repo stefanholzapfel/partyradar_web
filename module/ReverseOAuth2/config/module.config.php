@@ -96,7 +96,7 @@ return array(
         ),
 		'partyradar' => array(
 			'scope' => array(),
-			//'auth_uri'      => 'http://localhost:51459/Token',
+			'uri'      		=> 'http://localhost:51459/',
 			'token_uri'     => 'http://localhost:51459/Token',
 			'info_uri'      => 'http://localhost:51459/api/Account/UserInfo',
 		),

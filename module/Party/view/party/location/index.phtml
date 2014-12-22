@@ -1,5 +1,17 @@
 <?php
 
-print_r($test);
+$title = 'Administrate Locations';
 
+$this->headTitle($title);
+
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+	<a class="btn btn-default" href="<?php echo $this->url('party/location', array('action' => 'add'));?>">Add Location</a>
+</p>
+
+<?php
+echo $this->flashMessenger()->renderAll();
+print_r($test);
 ?>

@@ -7,17 +7,17 @@ use Zend\Mvc\Controller\AbstractActionController as ZfAbstractActionController;
 class AbstractActionController extends ZfAbstractActionController {
 
 	/**
-	 *  @var \ReverseOAuth2\Client\PartyRadar
+	 *  @var \Party\Service\PartyServiceInterface
 	 */
 	protected $partyService;
 
 	/**
 	 *
-	 * @return \ReverseOAuth2\Client\PartyRadar
+	 * @return \Party\Service\PartyServiceInterface
 	 */
 	public function getPartyRadarService() {
 		if(!$this->partyService) {
-			$this->partyService = $this->getServiceLocator()->get('ReverseOAuth2\PartyRadar');
+			$this->partyService = $this->getServiceLocator()->get('Party\PartyService');
 		}
 		return $this->partyService;
 	}

@@ -9,6 +9,7 @@ return array(
 			'formElement' => 'Bootstrap\Form\View\Helper\FormElement',
 			'formStatic' => 'Bootstrap\Form\View\Helper\FormElementStatic',
 			'flashMessenger' => 'Bootstrap\View\Helper\FlashMessenger',
+			'formCheckbox' => 'Bootstrap\Form\View\Helper\FormCheckbox',
 			'bootstrapMenu' => 'Bootstrap\View\Helper\BootstrapMenu'
 		)
 	)

@@ -6,6 +6,11 @@ return array(
         	'Party\Controller\Event' => 'Party\Controller\EventController',
         ),
     ),
+	'service_manager' => array(
+		'factories' => array(
+			'Party\PartyService' => 'Party\Service\PartyServiceFactory'
+		),
+	),
     'router' => array(
         'routes' => array(
             'party' => array(
@@ -24,9 +29,13 @@ return array(
                 'may_terminate' => true,
                 'child_routes' => array(
                     'location' => array(
-                        'type'    => 'Literal',
+                        'type'    => 'segment',
                         'options' => array(
-                            'route'    => '/location',
+                        	'route'    => '/location[/][:action][/:id]',
+                        	'constraints' => array(
+                        		'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        		'id'     => '[a-zA-Z0-9_-]*',
+                        	),
                             'defaults' => array(
                             	'__NAMESPACE__' => 'Party\Controller',
                             	'controller'    => 'Location',
@@ -35,9 +44,13 @@ return array(
                         ),
                     ),
                 	'event' => array(
-                		'type'    => 'Literal',
-                		'options' => array(
-                			'route'    => '/event',
+                		'type'    => 'segment',
+                        'options' => array(
+                        	'route'    => '/event[/][:action][/:id]',
+                        	'constraints' => array(
+                        		'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        		'id'     => '[a-zA-Z0-9_-]*',
+                        	),
                 			'defaults' => array(
                 				'__NAMESPACE__' => 'Party\Controller',
                 				'controller'    => 'Event',
@@ -54,4 +67,9 @@ return array(
             'Party' => __DIR__ . '/../view',
         ),
     ),
+	'service_config' => array(
+		'locations' => 'api/Location',
+		'events' => 'api/Event',
+		'user' => 'api/Account'
+	),
 );

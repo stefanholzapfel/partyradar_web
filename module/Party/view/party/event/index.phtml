@@ -1,5 +1,17 @@
 <?php
 
-print_r($events);
+$title = 'Administrate Events';
 
+$this->headTitle($title);
+
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+	<a class="btn btn-default" href="<?php echo $this->url('party/event', array('action' => 'add'));?>">Add Event</a>
+</p>
+
+<?php
+echo $this->flashMessenger()->renderAll();
+print_r($events);
 ?>

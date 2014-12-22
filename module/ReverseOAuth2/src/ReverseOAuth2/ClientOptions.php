@@ -21,7 +21,16 @@ class ClientOptions extends AbstractOptions
 
     protected $redirectUri;
 
-    
+    protected $uri;
+
+    public function getUri() {
+    	return $this->uri;
+    }
+
+    public function setUri($uri) {
+    	$this->uri = $uri;
+    }
+
     public function getScope()
     {
         return $this->scope;
