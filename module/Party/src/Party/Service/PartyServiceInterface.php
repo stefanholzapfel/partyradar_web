@@ -4,6 +4,7 @@ namespace Party\Service;
 
 use Zend\Http\PhpEnvironment\Request;
 use Party\Model\Location;
+use Party\Model\User;
 /**
  *
  * @author AT21572
@@ -36,6 +37,21 @@ class PartyServiceInterface {
 
 	public function getLocations() {
 		return $this->getPartyRadarService()->call(Request::METHOD_GET, $this->config['locations']);
+	}
+
+	/**
+	 *
+	 * @return multitype:\Party\Model\User
+	 */
+	public function getUsers() {
+		$userArray = $this->getPartyRadarService()->call(Request::METHOD_GET, $this->config['users']);
+		$return = array();
+		foreach ($userArray as $userData) {
+			$userToAdd = new User();
+			$userToAdd->exchangeArray($userData);
+			$return[] = $userToAdd;
+		}
+		return $return;
 	}
 
 	/**

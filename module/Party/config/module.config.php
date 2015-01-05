@@ -4,6 +4,7 @@ return array(
         'invokables' => array(
             'Party\Controller\Location' => 'Party\Controller\LocationController',
         	'Party\Controller\Event' => 'Party\Controller\EventController',
+        	'Party\Controller\User' => 'Party\Controller\UserController'
         ),
     ),
 	'service_manager' => array(
@@ -58,6 +59,21 @@ return array(
                 			),
                 		),
                 	),
+                	'user' => array(
+                		'type'    => 'segment',
+                		'options' => array(
+                			'route'    => '/user[/][:action][/:id]',
+                			'constraints' => array(
+                				'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                				'id'     => '[a-zA-Z0-9_-]*',
+                			),
+                			'defaults' => array(
+                				'__NAMESPACE__' => 'Party\Controller',
+                				'controller'    => 'User',
+                				'action'        => 'index',
+                			),
+                		),
+                	),
                 ),
             ),
         ),
@@ -70,6 +86,6 @@ return array(
 	'service_config' => array(
 		'locations' => 'api/Location',
 		'events' => 'api/Event',
-		'user' => 'api/Account'
+		'users' => 'api/User',
 	),
 );

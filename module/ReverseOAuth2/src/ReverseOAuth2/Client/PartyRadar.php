@@ -42,6 +42,7 @@ class PartyRadar extends AbstractOAuth2Client {
 			->setMethod($method)
 			->setUri($this->getUrl() . $api . $params);
 
+
 			$retVal = $client->send()->getContent();
 
 			return \Zend\Json\Decoder::decode($retVal, \Zend\Json\Json::TYPE_ARRAY);

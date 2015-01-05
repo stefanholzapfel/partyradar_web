@@ -96,9 +96,9 @@ return array(
         ),
 		'partyradar' => array(
 			'scope' => array(),
-			'uri'      		=> 'http://localhost:51459/',
-			'token_uri'     => 'http://localhost:51459/Token',
-			'info_uri'      => 'http://localhost:51459/api/Account/UserInfo',
+			'uri'      		=> 'http://wi-gate.technikum-wien.at:60349/',
+			'token_uri'     => 'http://wi-gate.technikum-wien.at:60349/Token',
+			'info_uri'      => 'http://wi-gate.technikum-wien.at:60349/api/Account/UserInfo',
 		),
     )
 

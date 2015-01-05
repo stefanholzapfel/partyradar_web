@@ -34,6 +34,10 @@ return array(
 				'route' => 'party/event',
 			),
 			array(
+				'label' => 'User',
+				'route' => 'party/user',
+			),
+			array(
 				'label' => 'Logout',
 				'route' => 'auth',
 				'action' => 'logout'

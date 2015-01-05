@@ -1,0 +1,35 @@
+<?php
+$title = 'Administrate Users';
+
+$this->headTitle($title);
+
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+	<a class="btn btn-default" href="<?php echo $this->url('party/user', array('action' => 'add'));?>">Add User</a>
+</p>
+
+<table class="table">
+	<tr>
+		<th>Username</th>
+		<th>Firstname</th>
+		<th>Lastname</th>
+		<th>Email</th>
+		<th>IsAdmin</th>
+		<th>&nbsp;</th>
+	</tr>
+ <?php foreach ($users as $user) : ?>
+	 <tr>
+		<td><?php echo $this->escapeHtml($user->userName);?></td>
+		<td><?php echo $this->escapeHtml($user->firstName);?></td>
+		<td><?php echo $this->escapeHtml($user->lastName);?></td>
+		<td><?php echo $this->escapeHtml($user->email);?></td>
+		<td><?php echo $user->isAdmin ? '<span class="label label-success">true</span>' : '<span class="label label-danger">false</span>' ?></td>
+		<td>
+			<a class="btn btn-sm btn-primary" href="<?php echo $this->url('party/user', array('action' => 'edit','id' => $user->id));?>">Edit</a>
+			<a class="btn btn-sm btn-danger" href="<?php echo $this->url('party/user', array('action' => 'delete','id' => $user->id));?>">Delete</a>
+		</td>
+	</tr>
+ <?php endforeach; ?>
+</table>
