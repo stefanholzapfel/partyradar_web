@@ -2,101 +2,135 @@
 
 namespace Party\Form;
 
-use Zend\Form\Form;
+class UserForm extends AbstractPartyForm {
 
-class UserForm extends Form {
-
-	public function __construct() {
+	public function __construct($mode) {
 		parent::__construct('user');
 
 		$this->setAttribute('class', 'form-horizontal');
 
 		$this->add(array(
-			'name' => 'id',
+			'name' => 'Id',
 			'type' => 'Hidden',
 			'options' => array(
-				'label' => 'id'
+				'label' => 'Id'
 			),
 		));
 
 		$this->add(array(
-			'name' => 'username',
+			'name' => 'UserName',
 			'type' => 'Text',
 			'options' => array(
 				'label' => 'Username'
 			),
 			'attributes' => array(
-				'id' => 'username',
+				'id' => 'UserName',
 				'placeholder' => 'Username',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'firstname',
+			'name' => 'FirstName',
 			'type' => 'Text',
 			'options' => array(
 				'label' => 'Firstname'
 			),
 			'attributes' => array(
-				'id' => 'firstname',
+				'id' => 'FirstName',
 				'placeholder' => 'Firstname',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'lastname',
+			'name' => 'LastName',
 			'type' => 'Text',
 			'options' => array(
 				'label' => 'Lastname'
 			),
 			'attributes' => array(
-				'id' => 'lastname',
+				'id' => 'LastName',
 				'placeholder' => 'Lastname',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'email',
+			'name' => 'Email',
 			'type' => 'Email',
 			'options' => array(
 				'label' => 'Email'
 			),
 			'attributes' => array(
-				'id' => 'email',
+				'id' => 'Email',
 				'placeholder' => 'Email',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'password',
-			'type' => 'Password',
+			'name' => 'BirthDate',
+			'type' => 'Date',
 			'options' => array(
-				'label' => 'Password'
+				'label' => 'Birthdate',
+				'format' => 'd.m.Y'
 			),
 			'attributes' => array(
-				'id' => 'password',
+				'id' => 'BirthDate',
+				'placeholder' => 'BirthDate',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'confirmPassword',
-			'type' => 'Password',
+			'name' => 'Gender',
+			'type' => 'Select',
 			'options' => array(
-				'label' => 'Password'
+				'label' => 'Gender',
+				'empty_option' => 'Please choose',
+				'value_options' => array(
+					0 => 'Unknown',
+					1 => 'Male',
+					2 => 'Female'
+				),
 			),
 			'attributes' => array(
-				'id' => 'confirmPassword',
+				'id' => 'Gender',
 			),
 		));
 
+		if($mode == AbstractPartyForm::MODE_ADD) {
+			$this->add(array(
+				'name' => 'Password',
+				'type' => 'Password',
+				'options' => array(
+					'label' => 'Password'
+				),
+				'attributes' => array(
+					'id' => 'Password',
+				),
+			));
+
+			$this->add(array(
+				'name' => 'ConfirmPassword',
+				'type' => 'Password',
+				'options' => array(
+					'label' => 'Confirm password'
+				),
+				'attributes' => array(
+					'id' => 'ConfirmPassword',
+				),
+			));
+		}
+
 		$this->add(array(
-			'name' => 'isAdmin',
+			'name' => 'IsAdmin',
 			'type' => 'Checkbox',
 			'options' => array(
-				'label' => 'IsAdmin'
+				'label' => 'IsAdmin',
+				'use_hidden_element' => true,
+				'checked_value' => 1,
+				'unchecked_value' => 0,
+				'disable_inarray_validator' => true,
 			),
 			'attributes' => array(
-				'id' => 'isAdmin',
+				'id' => 'IsAdmin',
 			),
 		));
 

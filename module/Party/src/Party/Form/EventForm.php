@@ -17,109 +17,115 @@ class EventForm extends Form {
 		$this->setAttribute('class', 'form-horizontal');
 
 		$this->add(array(
-			'name' => 'id',
+			'name' => 'EventId',
 			'type' => 'Hidden',
 			'options' => array(
-				'label' => 'id'
+				'label' => 'EventId'
 			),
 		));
 
 		$this->add(array(
-			'name' => 'title',
+			'name' => 'Title',
 			'type' => 'Text',
 			'options' => array(
 				'label' => 'Title'
 			),
 			'attributes' => array(
-				'id' => 'title',
+				'id' => 'Title',
 				'placeholder' => 'Title',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'description',
-			'type' => 'Text',
+			'name' => 'Description',
+			'type' => 'TextArea',
 			'options' => array(
 				'label' => 'Description'
 			),
 			'attributes' => array(
-				'id' => 'description',
+				'id' => 'Description',
 				'placeholder' => 'Description',
+				'rows' => '10',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'website',
-			'type' => 'Text',
+			'name' => 'Website',
+			'type' => 'Url',
 			'options' => array(
 				'label' => 'Website'
 			),
 			'attributes' => array(
-				'id' => 'website',
+				'id' => 'Website',
 				'placeholder' => 'Website',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'start',
+			'name' => 'Start',
 			'type' => 'Text',
 			'options' => array(
-				'label' => 'Start'
+				'label' => 'Start',
 			),
 			'attributes' => array(
-				'id' => 'start',
+				'id' => 'Start',
 				'placeholder' => 'Start',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'end',
+			'name' => 'End',
 			'type' => 'Text',
 			'options' => array(
-				'label' => 'End'
+				'label' => 'End',
 			),
 			'attributes' => array(
-				'id' => 'end',
+				'id' => 'End',
 				'placeholder' => 'End',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'locationID',
+			'name' => 'MaxAttends',
 			'type' => 'Text',
 			'options' => array(
-				'label' => 'Location'
+				'label' => 'MaxAttends',
 			),
 			'attributes' => array(
-				'id' => 'locationID',
-				'placeholder' => 'Location',
+				'id' => 'MaxAttends',
+				'placeholder' => 'MaxAttends'
 			),
 		));
 
 		$this->add(array(
-			'name' => 'keywords',
-			'type' => 'Text',
+			'name' => 'LocationId',
+			'type' => 'Select',
 			'options' => array(
-				'label' => 'Keywords'
+				'label' => 'Location',
+				'empty_option' => 'Please choose',
+				'disable_inarray_validator' => true,
 			),
 			'attributes' => array(
-				'id' => 'keywords',
+				'id' => 'LocationId',
+			),
+		));
+
+		$this->add(array(
+			'name' => 'Keywords',
+			'type' => 'Select',
+			'options' => array(
+				'label' => 'Keywords',
+				'empty_option' => 'Please choose',
+				'disable_inarray_validator' => true,
+			),
+			'attributes' => array(
+				'id' => 'Keywords',
 				'placeholder' => 'Keywords',
+				'multiple' => true,
 			),
 		));
 
-		$this->add(array(
-			'name' => 'attendeeCount',
-			'type' => 'Bootstrap\Form\Element\StaticElement',
-			'options' => array(
-				'label' => 'Attendee count'
-			),
-			'attributes' => array(
-				'id' => 'attendeeCount',
-			),
-		));
-
-		$this->add(array(
+		/*$this->add(array(
 			'name' => 'image',
 			'type' => 'Text',
 			'options' => array(
@@ -129,7 +135,7 @@ class EventForm extends Form {
 				'id' => 'image',
 				'placeholder' => 'Image'
 			),
-		));
+		));*/
 
 		$this->add(array(
 			'name' => 'submit',

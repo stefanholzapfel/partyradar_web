@@ -17,117 +17,118 @@ class LocationForm extends Form {
 		$this->setAttribute('class', 'form-horizontal');
 
 		$this->add(array(
-			'name' => 'id',
+			'name' => 'Id',
 			'type' => 'Hidden',
 			'options' => array(
-				'label' => 'id'
+				'label' => 'Id'
 			),
 		));
 
 		$this->add(array(
-			'name' => 'locationName',
+			'name' => 'Name',
 			'type' => 'Text',
 			'options' => array(
 				'label' => 'Name'
 			),
 			'attributes' => array(
-				'id' => 'locationName',
+				'id' => 'Name',
 				'placeholder' => 'Name',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'lon',
-			'type' => 'Text',
-			'options' => array(
-				'label' => 'Longitude'
-			),
-			'attributes' => array(
-				'id' => 'lon',
-				'placeholder' => 'Longitude',
-			),
-		));
-
-		$this->add(array(
-			'name' => 'lat',
-			'type' => 'Text',
-			'options' => array(
-				'label' => 'Latitude'
-			),
-			'attributes' => array(
-				'id' => 'lat',
-				'placeholder' => 'Latitude',
-			),
-		));
-
-		$this->add(array(
-			'name' => 'address',
+			'name' => 'Address',
 			'type' => 'Text',
 			'options' => array(
 				'label' => 'Address'
 			),
 			'attributes' => array(
-				'id' => 'address',
+				'id' => 'Address',
 				'placeholder' => 'Address',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'addressAdditions',
+			'name' => 'AddressAdditions',
 			'type' => 'Text',
 			'options' => array(
 				'label' => 'Address additions'
 			),
 			'attributes' => array(
-				'id' => 'addressAdditions',
+				'id' => 'AddressAdditions',
 				'placeholder' => 'Address additions',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'zipcode',
+			'name' => 'ZipCode',
 			'type' => 'Text',
 			'options' => array(
-				'label' => 'Zipcode'
+				'label' => 'ZipCode'
 			),
 			'attributes' => array(
-				'id' => 'zipcode',
-				'placeholder' => 'Zipcode',
+				'id' => 'ZipCode',
+				'placeholder' => 'ZipCode',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'country',
+			'name' => 'City',
+			'type' => 'Text',
+			'options' => array(
+				'label' => 'City'
+			),
+			'attributes' => array(
+				'id' => 'City',
+				'placeholder' => 'City',
+			),
+		));
+
+		$this->add(array(
+			'name' => 'Country',
 			'type' => 'Text',
 			'options' => array(
 				'label' => 'Country'
 			),
 			'attributes' => array(
-				'id' => 'country',
+				'id' => 'Country',
 				'placeholder' => 'Country',
 			),
 		));
 
 		$this->add(array(
-			'name' => 'maxAttends',
+			'name' => 'Longitude',
+			'type' => 'Text',
+			'options' => array(
+				'label' => 'Longitude'
+			),
+			'attributes' => array(
+				'id' => 'Longitude',
+				'placeholder' => 'Longitude',
+			),
+		));
+
+		$this->add(array(
+			'name' => 'Latitude',
+			'type' => 'Text',
+			'options' => array(
+				'label' => 'Latitude'
+			),
+			'attributes' => array(
+				'id' => 'Latitude',
+				'placeholder' => 'Latitude',
+			),
+		));
+
+		$this->add(array(
+			'name' => 'MaxAttends',
 			'type' => 'Text',
 			'options' => array(
 				'label' => 'Max attends'
 			),
 			'attributes' => array(
-				'id' => 'maxAttends',
+				'id' => 'MaxAttends',
 				'placeholder' => 'Max attends',
-			),
-		));
-
-		$this->add(array(
-			'name' => 'isInactive',
-			'type' => 'Checkbox',
-			'options' => array(
-				'label' => 'Is Inactive'
-			),
-			'attributes' => array(
-				'id' => 'isInactive',
 			),
 		));
 

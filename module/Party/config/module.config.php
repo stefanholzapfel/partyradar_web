@@ -35,7 +35,7 @@ return array(
                         	'route'    => '/location[/][:action][/:id]',
                         	'constraints' => array(
                         		'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        		'id'     => '[a-zA-Z0-9_-]*',
+                        		'id'     => '[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}',
                         	),
                             'defaults' => array(
                             	'__NAMESPACE__' => 'Party\Controller',
@@ -50,7 +50,7 @@ return array(
                         	'route'    => '/event[/][:action][/:id]',
                         	'constraints' => array(
                         		'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        		'id'     => '[a-zA-Z0-9_-]*',
+                        		'id'     => '[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}',
                         	),
                 			'defaults' => array(
                 				'__NAMESPACE__' => 'Party\Controller',
@@ -65,7 +65,7 @@ return array(
                 			'route'    => '/user[/][:action][/:id]',
                 			'constraints' => array(
                 				'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                				'id'     => '[a-zA-Z0-9_-]*',
+                				'id'     => '[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}',
                 			),
                 			'defaults' => array(
                 				'__NAMESPACE__' => 'Party\Controller',
@@ -87,5 +87,6 @@ return array(
 		'locations' => 'api/Location',
 		'events' => 'api/Event',
 		'users' => 'api/User',
+		'keywords' => 'api/Keyword'
 	),
 );

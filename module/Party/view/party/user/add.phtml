@@ -1,4 +1,11 @@
 <?php
+
+$this->headLink()->appendStylesheet($this->basePath() . '/css/bootstrap-datetimepicker.min.css');
+
+$this->headScript()
+	->appendFile($this->basePath() . '/js/moment.min.js')
+	->appendFile($this->basePath() . '/js/bootstrap-datetimepicker.min.js');
+
 $title = 'Add User';
 $this->headTitle($title);
 ?>
@@ -11,3 +18,13 @@ $form->setAttribute('action', $this->url('party/user', array(
 )));
 echo $this->form($form);
 ?>
+
+<script>
+$(document).ready(function(){
+	$('#BirthDate').datetimepicker({
+		pickTime:false,
+		locale:'de',
+		format:'DD.MM.YYYY'
+	});
+});
+</script>

@@ -1,6 +1,14 @@
 <?php
+$this->headScript()
+	->appendFile($this->basePath() . '/js/selectize.min.js')
+	->appendFile($this->basePath() . '/js/moment.min.js')
+	->appendFile($this->basePath() . '/js/bootstrap-datetimepicker.min.js');
 
-$title = 'Add Location';
+$this->headLink()
+	->appendStylesheet($this->basePath() . '/css/selectize.bootstrap3.css')
+	->appendStylesheet($this->basePath() . '/css/bootstrap-datetimepicker.min.css');
+
+$title = 'Add Event';
 $this->headTitle($title);
 
 ?>
@@ -11,3 +19,26 @@ $this->headTitle($title);
  $form->setAttribute('action', $this->url('party/event', array('action' => 'add')));
 echo $this->form($form);
 ?>
+
+<script>
+$(document).ready(function() {
+	$('#Keywords').selectize({
+		persist:false,
+		create:false,
+		delimiter:',',
+		maxItems:null,
+		preload:true,
+	});
+	$('#Start').datetimepicker({
+		language:'de',
+		format:'DD.MM.YYYY HH:mm',
+		sideBySide:true
+	});
+
+	$('#End').datetimepicker({
+		locale:'de',
+		format:'DD.MM.YYYY HH:mm',
+		sideBySide:true
+	});
+});
+</script>

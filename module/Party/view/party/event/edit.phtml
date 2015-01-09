@@ -1,6 +1,15 @@
 <?php
 
-$title = 'Edit Location';
+$this->headScript()
+	->appendFile($this->basePath() . '/js/selectize.min.js')
+	->appendFile($this->basePath() . '/js/moment.min.js')
+	->appendFile($this->basePath() . '/js/bootstrap-datetimepicker.min.js');
+
+$this->headLink()
+	->appendStylesheet($this->basePath() . '/css/selectize.bootstrap3.css')
+	->appendStylesheet($this->basePath() . '/css/bootstrap-datetimepicker.min.css');
+
+$title = 'Edit Event';
 $this->headTitle($title);
 
 ?>
@@ -8,6 +17,30 @@ $this->headTitle($title);
 <h1><?php echo $this->escapeHtml($title) . ' - ' . $name; ?></h1>
 
 <?php
- $form->setAttribute('action', $this->url('party/event', array('action' => 'edit', 'id' => 'id')));
+ $form->setAttribute('action', $this->url('party/event', array('action' => 'edit', 'id' => $id)));
 echo $this->form($form);
 ?>
+
+<script>
+$(document).ready(function() {
+	$('#Keywords').selectize({
+		persist:false,
+		create:false,
+		delimiter:',',
+		maxItems:null,
+		preload:true,
+	});
+	$('#Start').datetimepicker({
+		language:'de',
+		format:'DD.MM.YYYY HH:mm',
+		sideBySide:true
+	});
+
+	$('#End').datetimepicker({
+		locale:'de',
+		format:'DD.MM.YYYY HH:mm',
+		sideBySide:true
+	});
+});
+</script>
+

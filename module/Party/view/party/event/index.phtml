@@ -11,7 +11,22 @@ $this->headTitle($title);
 	<a class="btn btn-default" href="<?php echo $this->url('party/event', array('action' => 'add'));?>">Add Event</a>
 </p>
 
-<?php
-echo $this->flashMessenger()->renderAll();
-print_r($events);
-?>
+<table class="table">
+	<tr>
+		<th>Title</th>
+		<th>Start</th>
+		<th>End</th>
+		<th>&nbsp;</th>
+	</tr>
+ <?php foreach ($events as $event) : ?>
+	 <tr>
+		<td><?php echo $this->escapeHtml($event->title);?></td>
+		<td><?php echo $this->escapeHtml($event->start->format('d.m.Y H:i'));?></td>
+		<td><?php echo $this->escapeHtml($event->end->format('d.m.Y H:i'));?></td>
+		<td>
+			<a class="btn btn-sm btn-primary" href="<?php echo $this->url('party/event', array('action' => 'edit','id' => $event->eventId));?>">Edit</a>
+			<a class="btn btn-sm btn-danger" href="<?php echo $this->url('party/event', array('action' => 'delete','id' => $event->eventId));?>">Delete</a>
+		</td>
+	</tr>
+ <?php endforeach; ?>
+</table>

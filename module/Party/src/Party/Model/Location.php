@@ -9,11 +9,11 @@ class Location extends AbstractPartyModel implements InputFilterAwareInterface {
 
 	public $id;
 
-	public $locationName;
+	public $name;
 
-	public $lon;
+	public $longitude;
 
-	public $lat;
+	public $latitude;
 
 	public $address;
 
@@ -27,26 +27,45 @@ class Location extends AbstractPartyModel implements InputFilterAwareInterface {
 
 	public $maxAttends;
 
-	public $isInactive;
-
 	public function exchangeArray($data = array()) {
 		if(count($data) > 0 && !is_null($data)) {
-			$this->id= isset($data['LocationID']) ? $data['LocationID'] : null;
-			$this->locationName = isset($data['locationName']) ? $data['locationName'] : null;
-			$this->lon = isset($data['lon']) ? $data['lon'] : null;
-			$this->lat = isset($data['lat']) ? $data['lat'] : null;
-			$this->address = isset($data['address']) ? $data['address'] : null;
-			$this->addressAdditions = isset($data['addressAdditions']) ? $data['addressAdditions'] : null;
-			$this->city = isset($data['city']) ? $data['city'] : null;
-			$this->zipcode = isset($data['zipcode']) ? $data['zipcode'] : null;
-			$this->country = isset($data['country']) ? $data['country'] : null;
-			$this->maxAttends = isset($data['maxAttends']) ? $data['maxAttends'] : null;
-			$this->isInactive = isset($data['isInactive']) ? $data['isInactive'] : null;
+			$this->id= isset($data['Id']) ? $data['Id'] : null;
+			$this->name = isset($data['Name']) ? $data['Name'] : null;
+			$this->longitude = isset($data['Longitude']) ? $data['Longitude'] : null;
+			$this->latitude = isset($data['Latitude']) ? $data['Latitude'] : null;
+			$this->address = isset($data['Address']) ? $data['Address'] : null;
+			$this->addressAdditions = isset($data['AddressAdditions']) ? $data['AddressAdditions'] : null;
+			$this->city = isset($data['City']) ? $data['City'] : null;
+			$this->zipcode = isset($data['ZipCode']) ? $data['ZipCode'] : null;
+			$this->country = isset($data['Country']) ? $data['Country'] : null;
+			$this->maxAttends = isset($data['MaxAttends']) ? $data['MaxAttends'] : null;
 		}
 	}
 
 	public function getArrayCopy() {
-		return get_object_vars($this);
+		$vars = array(
+			'Id' => $this->id,
+			'Name' => $this->name,
+			'Longitude' => $this->longitude,
+			'Latitude' => $this->latitude,
+			'Address' => $this->address,
+			'AddressAdditions' => $this->addressAdditions,
+			'City' => $this->city,
+			'ZipCode' => $this->zipcode,
+			'Country' => $this->country,
+			'MaxAttends' => $this->maxAttends,
+		);
+		return $vars;
+	}
+
+	public function getServiceCopyForUpdate() {
+		$vars = $this->getArrayCopy();
+
+		return $vars;
+	}
+
+	public function getServiceCopy() {
+		return $this->getArrayCopy();
 	}
 
 	/* (non-PHPdoc)
@@ -64,80 +83,83 @@ class Location extends AbstractPartyModel implements InputFilterAwareInterface {
 			$inputFilter = new InputFilter();
 
 			$inputFilter->add(array(
-				'name'     => 'id',
+				'name'     => 'Id',
+				'required' => false,
+			));
+
+			$inputFilter->add(array(
+				'name'     => 'Name',
+				'required' => true,
+				'filters'  => self::$stdFilter,
+				'validators' => self::$stdValidator
+			));
+
+			$inputFilter->add(array(
+				'name'     => 'Longitude',
+				'required' => true,
+				'filters'  => self::$stdFilter,
+				'validators' => array(
+					array(
+						'name' => 'Float'
+					),
+				),
+			));
+
+			$inputFilter->add(array(
+				'name'     => 'Latitude',
+				'required' => true,
+				'filters'  => self::$stdFilter,
+				'validators' => array(
+					array(
+						'name' => 'Float'
+					),
+				),
+			));
+
+			$inputFilter->add(array(
+				'name'     => 'Address',
+				'required' => true,
+				'filters'  => self::$stdFilter,
+				'validators' => self::$stdValidator
+			));
+
+			$inputFilter->add(array(
+				'name'     => 'AddressAdditions',
 				'required' => false,
 				'filters'  => self::$stdFilter,
 				'validators' => self::$stdValidator
 			));
 
 			$inputFilter->add(array(
-				'name'     => 'locationName',
+				'name'     => 'ZipCode',
 				'required' => true,
 				'filters'  => self::$stdFilter,
 				'validators' => self::$stdValidator
 			));
 
 			$inputFilter->add(array(
-				'name'     => 'lon',
+				'name'     => 'City',
 				'required' => true,
 				'filters'  => self::$stdFilter,
 				'validators' => self::$stdValidator
 			));
 
 			$inputFilter->add(array(
-				'name'     => 'lat',
+				'name'     => 'Country',
 				'required' => true,
 				'filters'  => self::$stdFilter,
 				'validators' => self::$stdValidator
 			));
 
 			$inputFilter->add(array(
-				'name'     => 'address',
+				'name'     => 'MaxAttends',
 				'required' => true,
 				'filters'  => self::$stdFilter,
-				'validators' => self::$stdValidator
-			));
-
-			$inputFilter->add(array(
-				'name'     => 'addressAdditions',
-				'required' => true,
-				'filters'  => self::$stdFilter,
-				'validators' => self::$stdValidator
-			));
-
-			$inputFilter->add(array(
-				'name'     => 'zipcode',
-				'required' => true,
-				'filters'  => self::$stdFilter,
-				'validators' => self::$stdValidator
-			));
-
-			$inputFilter->add(array(
-				'name'     => 'city',
-				'required' => true,
-				'filters'  => self::$stdFilter,
-				'validators' => self::$stdValidator
-			));
-
-			$inputFilter->add(array(
-				'name'     => 'country',
-				'required' => true,
-				'filters'  => self::$stdFilter,
-				'validators' => self::$stdValidator
-			));
-
-			$inputFilter->add(array(
-				'name'     => 'maxAttends',
-				'required' => true,
-				'filters'  => self::$stdFilter,
-				'validators' => self::$stdValidator
-			));
-
-			$inputFilter->add(array(
-				'name'     => 'isInactive',
-				'required' => true,
-				'filters'  => self::$stdFilter,
-				'validators' => self::$stdValidator
+				'validators' => array(
+					array(
+						'name' => 'Digits'
+					),
+				),
 			));
 
 			$this->inputFilter = $inputFilter;

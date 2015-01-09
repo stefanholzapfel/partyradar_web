@@ -18,21 +18,60 @@ class EventController extends AbstractActionController {
 	}
 
 	public function editAction() {
-		$form = new EventForm();
 		$id = (string)$this->params()->fromRoute('id', 0);
 		if (! $id) {
 			return $this->redirect()->toRoute('party/event', array(
 				'action' => 'index',
 			));
 		}
-		//try to fetch location object from service here...
-		$event = new Event();
+		$form = new EventForm();
+		/* @var $request \Zend\Http\Request */
+		$request = $this->getRequest();
+		if($request->isPost()) {
+			$event = new Event();
+			$form->setInputFilter($event->getInputFilter());
+			$form->setData($request->getPost());
+			if ($form->isValid()) {
+				$data = $form->getData(FormInterface::VALUES_AS_ARRAY);
+				$event->exchangeArray($data);
+				try {
+					$this->getPartyRadarService()->updateEvent($event);
+				} catch (\Exception $e) {
+					$this->flashMessenger()->addErrorMessage($e->getMessage());
+					return $this->redirect()->toRoute('party/event', array(
+						'action' => 'edit'
+					));
+				}
+
+				$this->flashMessenger()->addSuccessMessage("Event '" . $event->title . "' successfully updated!");
+				return $this->redirect()->toRoute('party/event', array(
+					'action' => 'index'
+				));
+			}
+		}
+		try {
+			$event = $this->getPartyRadarService()->getEvent($id);
+		} catch (\Exception $e) {
+			$this->flashMessenger()->addErrorMessage($e->getMessage());
+			return $this->redirect()->toRoute('party/event', array(
+				'action' => 'index'
+			));
+		}
+
+
+		/* @var $locationSelect \Zend\Form\Element\Select */
+		$locationSelect = $form->get('LocationId');
+		$locationSelect->setValueOptions($this->getLocationOptions());
+		/* @var $keywordSelect \Zend\Form\Element\Select */
+		$keywordSelect = $form->get('Keywords');
+		$keywordSelect->setValueOptions($this->getKeywordOptions($event));
+
 
 		$form->bind($event);
 
 		return array(
 			'form' => $form,
-			'id' => $event->id,
+			'id' => $event->eventId,
 			'name' => $event->title
 		);
 	}
@@ -48,15 +87,62 @@ class EventController extends AbstractActionController {
 			if ($form->isValid()) {
 				$data = $form->getData(FormInterface::VALUES_AS_ARRAY);
 				$event->exchangeArray($data);
-				//add location through service here --> DOES NOT WORK :-[[
+				try {
+					$this->getPartyRadarService()->addEvent($event);
+				} catch (\Exception $e) {
+					$this->flashMessenger()->addErrorMessage($e->getMessage());
+					return $this->redirect()->toRoute('party/event', array(
+						'action' => 'add',
+					));
+				}
 				$this->flashMessenger()->addSuccessMessage("Event '" . $event->title . "' successfully created!");
-				return $this->redirect()->toRoute('party/event', array('action' => 'index'));
+				return $this->redirect()->toRoute('party/event', array(
+					'action' => 'index'
+				));
 			}
 		}
+
+		/* @var $locationSelect \Zend\Form\Element\Select */
+		$locationSelect = $form->get('LocationId');
+		$locationSelect->setValueOptions($this->getLocationOptions());
+		/* @var $keywordSelect \Zend\Form\Element\Select */
+		$keywordSelect = $form->get('Keywords');
+		$keywordSelect->setValueOptions($this->getKeywordOptions());
 
 		return array(
 			'form' => $form,
 		);
+	}
+
+	/**
+	 * @param Event $event (optional)
+	 * @return array keywordOptions
+	 */
+	protected function getKeywordOptions(Event $event = NULL) {
+		$keywords = $this->getPartyRadarService()->getKeywords();
+		foreach ($keywords as $keyword) {
+			$selected = FALSE;
+			if(!is_null($event) && count($event->keywords) > 0 && in_array($keyword, $event->keywords)) {
+				$selected = TRUE;
+			}
+			$return[] = array(
+				'value' => $keyword->id,
+				'label' => $keyword->label,
+				'selected' => $selected
+			);
+		}
+		return $return;
+	}
+
+	/**
+	 * @return array locationOptions
+	 */
+	protected function getLocationOptions() {
+		$locations = $this->getPartyRadarService()->getLocations();
+		foreach ($locations as $location) {
+			$return[$location->id] = $location->name;
+		}
+		return $return;
 	}
 
 }

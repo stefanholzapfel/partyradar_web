@@ -11,7 +11,26 @@ $this->headTitle($title);
 	<a class="btn btn-default" href="<?php echo $this->url('party/location', array('action' => 'add'));?>">Add Location</a>
 </p>
 
-<?php
-echo $this->flashMessenger()->renderAll();
-print_r($test);
-?>
+<table class="table">
+	<tr>
+		<th>Name</th>
+		<th>Address</th>
+		<th>City</th>
+		<th>Country</th>
+		<th>Max attends</th>
+		<th>&nbsp;</th>
+	</tr>
+ <?php foreach ($locations as $location) : ?>
+	 <tr>
+		<td><?php echo $this->escapeHtml($location->name);?></td>
+		<td><?php echo $this->escapeHtml($location->address);?></td>
+		<td><?php echo $this->escapeHtml($location->city);?></td>
+		<td><?php echo $this->escapeHtml($location->country);?></td>
+		<td><?php echo $this->escapeHtml($location->maxAttends); ?></td>
+		<td>
+			<a class="btn btn-sm btn-primary" href="<?php echo $this->url('party/location', array('action' => 'edit','id' => $location->id));?>">Edit</a>
+			<a class="btn btn-sm btn-danger" href="<?php echo $this->url('party/location', array('action' => 'delete','id' => $location->id));?>">Delete</a>
+		</td>
+	</tr>
+ <?php endforeach; ?>
+</table>

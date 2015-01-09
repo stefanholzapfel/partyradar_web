@@ -1,13 +1,121 @@
 <?php
+
+$this->headScript()->appendFile('https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places');
+
 $title = 'Add Location';
 $this->headTitle($title);
 ?>
 
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
+<div class="row" style="margin-bottom:15px;">
+	<div class="col-xs-offset-2 col-xs-5">
+		<label for="locSearch">Search location</label>
+		<input type="text" class="form-control" id="locSearch" placeholder="Enter location" onfocus="geolocate();">
+	</div>
+</div>
+
 <?php
+
 $form->setAttribute('action', $this->url('party/location', array(
 	'action' => 'add'
 )));
 echo $this->form($form);
 ?>
+
+
+<script>
+$(document).ready(function(){
+	initialize();
+});
+
+//This example displays an address form, using the autocomplete feature
+//of the Google Places API to help users fill in the information.
+
+var placeSearch, autocomplete;
+var componentForm = {
+	route: 'long_name',
+	street_number: 'short_name',
+	locality: 'long_name',
+	country: 'long_name',
+	postal_code: 'short_name'
+};
+
+var formFields = {
+	route: 'Address',
+	street_number: 'Address',
+	locality: 'City',
+	country: 'Country',
+	postal_code: 'ZipCode'
+};
+
+function initialize() {
+	//Create the autocomplete object, restricting the search
+	//to geographical location types.
+	autocomplete = new google.maps.places.Autocomplete(
+	 /** @type {HTMLInputElement} */(document.getElementById('locSearch')),
+	 { types: ['geocode'] });
+	//When the user selects an address from the dropdown,
+	//populate the address fields in the form.
+	google.maps.event.addListener(autocomplete, 'place_changed', function() {
+		fillInAddress();
+	});
+}
+
+function fillInAddress() {
+	//Get the place details from the autocomplete object.
+	var place = autocomplete.getPlace();
+
+	Object.keys(formFields).forEach(function (key) {
+		document.getElementById(formFields[key]).value = '';
+		document.getElementById(formFields[key]).disabled = false;
+	});
+
+	//Get each component of the address from the place details
+	//and fill the corresponding field on the form.
+	for (var i = 0; i < place.address_components.length; i++) {
+		var addressType = place.address_components[i].types[0];
+		if (componentForm[addressType]) {
+			var val = place.address_components[i][componentForm[addressType]];
+
+			elementVal = document.getElementById(formFields[addressType]).value;
+			if(formFields[addressType] == 'Address' && addressType == 'street_number') {
+				if(elementVal != '') {
+					document.getElementById(formFields[addressType]).value += ' ' + val;
+				} else {
+					document.getElementById(formFields[addressType]).value = val;
+				}
+			} else if (formFields[addressType] == 'Address' && addressType == 'route' && elementVal != '') {
+				if(elementVal != '') {
+					document.getElementById(formFields[addressType]).value = val + ' ' + elementVal;
+				} else {
+					document.getElementById(formFields[addressType]).value = val;
+				}
+			} else {
+				document.getElementById(formFields[addressType]).value = val;
+			}
+
+		}
+	}
+
+	document.getElementById('Longitude').value = place.geometry.location.lng();
+	document.getElementById('Latitude').value = place.geometry.location.lat();
+}
+
+//Bias the autocomplete object to the user's geographical location,
+//as supplied by the browser's 'navigator.geolocation' object.
+function geolocate() {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+		 var geolocation = new google.maps.LatLng(
+		     position.coords.latitude, position.coords.longitude);
+		 var circle = new google.maps.Circle({
+		   center: geolocation,
+		   radius: position.coords.accuracy
+		 });
+		 autocomplete.setBounds(circle.getBounds());
+		});
+	}
+}
+
+</script>
