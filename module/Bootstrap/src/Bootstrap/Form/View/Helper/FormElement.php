@@ -12,6 +12,7 @@ use Zend\Form\Factory;
 use Zend\Form\Element\Button;
 use Zend\Form\Element\Submit;
 use Zend\Form\Element\Checkbox;
+use Zend\Form\Element\File;
 
 /**
  *
@@ -57,7 +58,7 @@ class FormElement extends ZfFormElement {
 	public function render(ElementInterface $oElement) {
 		// Add form-controll class
 		$sElementType = $oElement->getAttribute('type');
-		if (!($oElement instanceof Collection) && !($oElement instanceof Button) && !($oElement instanceof Submit) && !($oElement instanceof Checkbox)) {
+		if (!($oElement instanceof Collection) && !($oElement instanceof Button) && !($oElement instanceof Submit) && !($oElement instanceof Checkbox) && (!$oElement instanceof File)) {
 			if ($sElementClass = $oElement->getAttribute('class')) {
 				if (! preg_match('/(\s|^)form-control(\s|$)/', $sElementClass)) {
 					$oElement->setAttribute('class', trim($sElementClass . ' form-control'));

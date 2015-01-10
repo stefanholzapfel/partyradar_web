@@ -125,17 +125,17 @@ class EventForm extends Form {
 			),
 		));
 
-		/*$this->add(array(
-			'name' => 'image',
-			'type' => 'Text',
+		$this->add(array(
+			'name' => 'Image',
+			'type' => 'File',
 			'options' => array(
 				'label' => 'Image'
 			),
 			'attributes' => array(
-				'id' => 'image',
+				'id' => 'Image',
 				'placeholder' => 'Image'
 			),
-		));*/
+		));
 
 		$this->add(array(
 			'name' => 'submit',

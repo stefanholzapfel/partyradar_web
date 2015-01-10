@@ -16,7 +16,10 @@ $this->headTitle($title);
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <?php
- $form->setAttribute('action', $this->url('party/event', array('action' => 'add')));
+ $form->setAttribute('action', $this->url('party/event', array(
+ 	'action' => 'add'
+ )));
+ $form->setAttribute('enctype', 'multipart/form-data');
 echo $this->form($form);
 ?>
 

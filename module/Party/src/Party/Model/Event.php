@@ -62,7 +62,7 @@ class Event extends AbstractPartyModel implements InputFilterAwareInterface {
 			'End' => $this->end->format('Y-m-d\TH:i'),
 			'LocationId' => $this->locationId,
 			'MaxAttends' => $this->maxAttends,
-			'Image' => array(),
+			'Image' => $this->encodeImageToByteArray(),
 		);
 		foreach ($this->keywords as $keyword) {
 			$vars['KeywordIds'][] = $keyword->id;
@@ -84,7 +84,6 @@ class Event extends AbstractPartyModel implements InputFilterAwareInterface {
 			$this->end = isset($data['End']) ? new \DateTime($data['End']) : new \DateTime('31.12.9999');
 			$this->locationId = isset($data['LocationId']) ? $data['LocationId'] : null;
 			$this->maxAttends = isset($data['MaxAttends']) ? $data['MaxAttends'] : null;
-			//$this->keywords = isset($data['Keywords']) ? $data['Keywords'] : null;
 			if(isset($data['Keywords'])) {
 				foreach ($data['Keywords'] as $keyword) {
 					$keywordToAdd = new Keyword();
@@ -95,7 +94,24 @@ class Event extends AbstractPartyModel implements InputFilterAwareInterface {
 				$this->keywords = null;
 			}
 			$this->attendeeCount = isset($data['attendeeCount']) ? $data['attendeeCount'] : null;
-			//$this->image = isset($data['image']) ? $data['image'] : null;
+			$this->image = isset($data['Image']) ? $data['Image'] : null;
+		}
+	}
+
+	/**
+	 * encodeImageToByteArray
+	 *
+	 * @return string|NULL
+	 */
+	protected function encodeImageToByteArray() {
+		if(is_array($this->image) && $this->image['tmp_name']) {
+			$file_tmp = $this->image['tmp_name'];
+			$type = $this->image['type'];
+			$data = file_get_contents($file_tmp);
+			$base64 = base64_encode($data);
+			return $base64;
+		} else {
+			return '';
 		}
 	}
 
@@ -185,18 +201,19 @@ class Event extends AbstractPartyModel implements InputFilterAwareInterface {
 				'required' => true,
 			));
 
-			/*$inputFilter->add(array(
-				'name'     => 'keywords',
-				'required' => true,
-				'filters'  => self::$stdFilter,
-				'validators' => self::$stdValidator
-			));
 			$inputFilter->add(array(
-				'name'     => 'image',
+				'name'     => 'Keywords',
 				'required' => true,
+			));
+
+			$inputFilter->add(array(
+				'name'     => 'Image',
+				'required' => false,
 				'filters'  => self::$stdFilter,
-				'validators' => self::$stdValidator
-			));*/
+				'validators' => array(
+					new \Zend\Validator\File\IsImage()
+				),
+			));
 
 			$this->inputFilter = $inputFilter;
 		}

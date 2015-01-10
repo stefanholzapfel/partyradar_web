@@ -57,7 +57,7 @@ class PartyServiceInterface {
 			$user->exchangeArray($userData);
 			return $user;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -74,7 +74,7 @@ class PartyServiceInterface {
 		if($response->isSuccess()) {
 			return true;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -90,7 +90,7 @@ class PartyServiceInterface {
 		if($response->isSuccess()) {
 			return true;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -113,7 +113,7 @@ class PartyServiceInterface {
 			}
 			return $return;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -128,7 +128,7 @@ class PartyServiceInterface {
 		if($response->isSuccess()) {
 			return true;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -149,7 +149,7 @@ class PartyServiceInterface {
 			$location->exchangeArray($locationData);
 			return $location;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -165,7 +165,7 @@ class PartyServiceInterface {
 		if($response->isSuccess()) {
 			return true;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -181,7 +181,7 @@ class PartyServiceInterface {
 		if($response->isSuccess()) {
 			return true;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -203,7 +203,7 @@ class PartyServiceInterface {
 			}
 			return $return;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -218,7 +218,7 @@ class PartyServiceInterface {
 		if($response->isSuccess()) {
 			return true;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -240,7 +240,7 @@ class PartyServiceInterface {
 			}
 			return $return;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response,  $client->getRequest());
 		}
 	}
 
@@ -260,7 +260,7 @@ class PartyServiceInterface {
 			$event->exchangeArray($eventData);
 			return $event;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -276,7 +276,7 @@ class PartyServiceInterface {
 		if($response->isSuccess()) {
 			return true;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -292,7 +292,7 @@ class PartyServiceInterface {
 		if($response->isSuccess()) {
 			return true;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -307,7 +307,7 @@ class PartyServiceInterface {
 		if($response->isSuccess()) {
 			return true;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 
@@ -329,7 +329,7 @@ class PartyServiceInterface {
 			}
 			return $return;
 		} else {
-			throw new PartyServiceException($response);
+			throw new PartyServiceException($response, $client->getRequest());
 		}
 	}
 

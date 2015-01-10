@@ -17,10 +17,16 @@ class Keyword {
 	}
 
 	public function exchangeArray($data = array()) {
-		if(count($data) > 0 && !is_null($data)) {
+		if(is_array($data)) {
 			$this->id = isset($data['Id']) ? $data['Id'] : null;
 			$this->label = isset($data['Label']) ? $data['Label'] : null;
+		} else {
+			$this->exchangeArrayForEventUpdate($data);
 		}
+	}
+
+	protected function exchangeArrayForEventUpdate($data) {
+		$this->id = $data;
 	}
 
 }

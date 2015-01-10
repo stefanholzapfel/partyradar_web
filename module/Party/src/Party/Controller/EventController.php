@@ -83,7 +83,11 @@ class EventController extends AbstractActionController {
 		if($request->isPost()) {
 			$event = new Event();
 			$form->setInputFilter($event->getInputFilter());
-			$form->setData($request->getPost());
+			$post = array_merge_recursive(
+				$request->getPost()->toArray(),
+				$request->getFiles()->toArray()
+			);
+			$form->setData($post);
 			if ($form->isValid()) {
 				$data = $form->getData(FormInterface::VALUES_AS_ARRAY);
 				$event->exchangeArray($data);
@@ -112,6 +116,28 @@ class EventController extends AbstractActionController {
 		return array(
 			'form' => $form,
 		);
+	}
+
+	public function deleteAction() {
+		$id = (string)$this->params()->fromRoute('id', 0);
+		if (! $id) {
+			return $this->redirect()->toRoute('party/event', array(
+				'action' => 'index',
+			));
+		}
+		try {
+			$this->getPartyRadarService()->deleteEvent($id);
+		} catch (\Exception $e) {
+			$this->flashMessenger()->addErrorMessage($e->getMessage());
+			return $this->redirect()->toRoute('party/event', array(
+				'action' => 'index',
+			));
+		}
+
+		$this->flashMessenger()->addSuccessMessage("Event successfully deleted!");
+		return $this->redirect()->toRoute('party/event', array(
+			'action' => 'index',
+		));
 	}
 
 	/**
