@@ -109,9 +109,8 @@ class Event extends AbstractPartyModel implements InputFilterAwareInterface {
 	protected function encodeImageToByteArray() {
 		if(is_array($this->image) && $this->image['tmp_name']) {
 			$file_tmp = $this->image['tmp_name'];
-			//$type = $this->image['type'];
 			$data = file_get_contents($file_tmp);
-			$base64 = base64_encode($data);
+			$base64 = \Zend\Mime\Mime::encodeBase64($data);
 			return $base64;
 		} else {
 			return null;

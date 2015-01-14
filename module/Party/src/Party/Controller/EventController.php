@@ -70,15 +70,21 @@ class EventController extends AbstractActionController {
 		$keywordSelect = $form->get('Keywords');
 		$keywordSelect->setValueOptions($this->getKeywordOptions($event));
 
-
 		$form->bind($event);
-
 
 		return array(
 			'form' => $form,
-			'id' => $event->eventId,
-			'name' => $event->title,
+			'event' => $event
 		);
+	}
+
+	private function base64_to_jpeg($base64_string, $output_file) {
+	    $ifp = fopen($output_file, "wb");
+
+	    fwrite($ifp, base64_decode($base64_string));
+	    fclose($ifp);
+
+	    return $output_file;
 	}
 
 	public function addAction() {

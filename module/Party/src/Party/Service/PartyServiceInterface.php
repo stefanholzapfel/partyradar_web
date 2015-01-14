@@ -257,11 +257,32 @@ class PartyServiceInterface {
 			$event = new Event();
 			$content = $response->getContent();
 			$eventData = \Zend\Json\Decoder::decode($content, \Zend\Json\Json::TYPE_ARRAY);
-
+			//print_r($eventData);
+			$image = $this->getEventImage($eventData['ImageUrl']);
+			$eventData['Image'] = $image;
 			$event->exchangeArray($eventData);
 			return $event;
 		} else {
 			throw new PartyServiceException($response, $client->getRequest());
+		}
+	}
+
+	protected function getEventImage($imageUrl) {
+		if($imageUrl != '') {
+			$api = substr($imageUrl, 1, strlen($imageUrl));
+			$client = $this->prepareHttpClient(Request::METHOD_GET, $api);
+			$response = $client->send();
+			if($response->isSuccess()) {
+				$content = $response->getContent();
+				$imageData = \Zend\Json\Decoder::decode($content, \Zend\Json\Json::TYPE_ARRAY);
+				if($imageData['Result']['Image'] !== "AA==") {
+					return $imageData['Result']['Image'];
+				} else {
+					return null;
+				}
+			} else {
+				throw new PartyServiceException($response, $client->getRequest());
+			}
 		}
 	}
 

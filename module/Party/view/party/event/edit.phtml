@@ -14,12 +14,25 @@ $this->headTitle($title);
 
 ?>
 
-<h1><?php echo $this->escapeHtml($title) . ' - ' . $name; ?></h1>
+<h1><?php echo $this->escapeHtml($title) . ' - ' . $event->title; ?></h1>
 
-<?php
- $form->setAttribute('action', $this->url('party/event', array('action' => 'edit', 'id' => $id)));
-echo $this->form($form);
-?>
+<div class="row">
+	<div class="col-xs-8">
+		<?php
+			$form->setAttribute('action', $this->url('party/event', array('action' => 'edit', 'id' => $event->eventId)));
+			echo $this->form($form);
+		?>
+	</div>
+	<div class="col-xs-4">
+		<?php
+			if($event->image) {
+				echo "<img class='img-responsive' src='data:image/png;base64," . $event->image . "'/>";
+			} else {
+				echo "<img class='img-responsive' src='http://placehold.it/300&text=no+picture+available'/>";
+			}
+		?>
+	</div>
+</div>
 
 <script>
 $(document).ready(function() {
