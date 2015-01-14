@@ -49,6 +49,7 @@ class Event extends AbstractPartyModel implements InputFilterAwareInterface {
 			'LocationId' => $this->locationId,
 			'MaxAttends' => $this->maxAttends,
 			'Keywords' => $this->keywords,
+			'Image' => $this->image
 		);
 		return $vars;
 	}
@@ -62,8 +63,10 @@ class Event extends AbstractPartyModel implements InputFilterAwareInterface {
 			'End' => $this->end->format('Y-m-d\TH:i'),
 			'LocationId' => $this->locationId,
 			'MaxAttends' => $this->maxAttends,
-			'Image' => $this->encodeImageToByteArray(),
 		);
+		$image = $this->encodeImageToByteArray();
+		if(!is_null($image))
+			$vars['Image'] = $image;
 		foreach ($this->keywords as $keyword) {
 			$vars['KeywordIds'][] = $keyword->id;
 		}
@@ -106,12 +109,12 @@ class Event extends AbstractPartyModel implements InputFilterAwareInterface {
 	protected function encodeImageToByteArray() {
 		if(is_array($this->image) && $this->image['tmp_name']) {
 			$file_tmp = $this->image['tmp_name'];
-			$type = $this->image['type'];
+			//$type = $this->image['type'];
 			$data = file_get_contents($file_tmp);
 			$base64 = base64_encode($data);
 			return $base64;
 		} else {
-			return '';
+			return null;
 		}
 	}
 
@@ -206,14 +209,39 @@ class Event extends AbstractPartyModel implements InputFilterAwareInterface {
 				'required' => true,
 			));
 
-			$inputFilter->add(array(
+			$fileInput = new \Zend\InputFilter\FileInput('Image');
+			$fileInput->setRequired(false);
+			$fileInput->getValidatorChain()->attach(
+				new \Zend\Validator\File\UploadFile()
+			)->attach(
+				new \Zend\Validator\File\IsImage()
+			);
+			$fileInput->getFilterChain()->attach(
+				new \Zend\Filter\File\RenameUpload(array(
+					'use_upload_name' => true,
+					'overwrite' => true,
+					'randomize' => true,
+					'use_upload_extension' => true,
+				))
+			);
+			$inputFilter->add($fileInput);
+
+			/*$inputFilter->add(array(
 				'name'     => 'Image',
 				'required' => false,
-				'filters'  => self::$stdFilter,
+				'filters'  => array(
+					new \Zend\Filter\File\RenameUpload(array(
+						'target' => './data/uploads/',
+						'use_upload_name' => true,
+						'overwrite' => true,
+						'randomize' => true,
+						'use_upload_extension' => true,
+					))
+				),
 				'validators' => array(
 					new \Zend\Validator\File\IsImage()
 				),
-			));
+			));*/
 
 			$this->inputFilter = $inputFilter;
 		}

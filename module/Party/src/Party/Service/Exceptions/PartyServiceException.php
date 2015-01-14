@@ -14,7 +14,7 @@ class PartyServiceException extends \Exception {
 		if(isset($errorContentDecoded['Message']))
 			$responseMsg .= ' ' . $errorContentDecoded['Message'] . PHP_EOL;
 		$requestMsg = 'Request:' . PHP_EOL;
-		$requestMsg .= 'Content: ' . print_r($errorRequest->getPost()->toArray(), true) . PHP_EOL;
+		$requestMsg .= 'Content: ' . http_build_query($errorRequest->getPost()->toArray()) . PHP_EOL;
 		$message = $responseMsg . $requestMsg;
 		parent::__construct($message);
 	}

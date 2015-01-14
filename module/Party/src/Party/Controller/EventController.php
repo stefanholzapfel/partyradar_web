@@ -28,9 +28,13 @@ class EventController extends AbstractActionController {
 		/* @var $request \Zend\Http\Request */
 		$request = $this->getRequest();
 		if($request->isPost()) {
+			$post = array_merge_recursive(
+				$request->getPost()->toArray(),
+				$request->getFiles()->toArray()
+			);
 			$event = new Event();
 			$form->setInputFilter($event->getInputFilter());
-			$form->setData($request->getPost());
+			$form->setData($post);
 			if ($form->isValid()) {
 				$data = $form->getData(FormInterface::VALUES_AS_ARRAY);
 				$event->exchangeArray($data);
@@ -69,10 +73,11 @@ class EventController extends AbstractActionController {
 
 		$form->bind($event);
 
+
 		return array(
 			'form' => $form,
 			'id' => $event->eventId,
-			'name' => $event->title
+			'name' => $event->title,
 		);
 	}
 
@@ -105,7 +110,6 @@ class EventController extends AbstractActionController {
 				));
 			}
 		}
-
 		/* @var $locationSelect \Zend\Form\Element\Select */
 		$locationSelect = $form->get('LocationId');
 		$locationSelect->setValueOptions($this->getLocationOptions());

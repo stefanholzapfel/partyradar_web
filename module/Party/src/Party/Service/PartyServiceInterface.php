@@ -257,6 +257,7 @@ class PartyServiceInterface {
 			$event = new Event();
 			$content = $response->getContent();
 			$eventData = \Zend\Json\Decoder::decode($content, \Zend\Json\Json::TYPE_ARRAY);
+
 			$event->exchangeArray($eventData);
 			return $event;
 		} else {
