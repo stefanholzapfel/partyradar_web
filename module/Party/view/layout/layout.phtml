@@ -13,7 +13,6 @@
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
                         ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
         <!-- Scripts -->
@@ -41,20 +40,23 @@
 				    	if($auth->hasIdentity()) {
 				    		$container = $this->navigation('navigation')->getContainer();
 				    		echo $this->bootstrapMenu($container)->setUlClass('nav navbar-nav')->escapeLabels(false);
+				    		echo '<div class="navbar-right">' .
+				    				'<a href="' . $this->url('auth', array('action' => 'logout')) . '" class="btn btn-danger navbar-btn">Logout</a>' .
+				    				'<p class="navbar-text">Logged in as ' . $auth->getIdentity()['Email'] . '</p>' .
+				    			'</div>';
 				    	}
 					?>
-			    </div>
+
+			</div>
 			<!-- /.navbar-collapse -->
 		</div>
 	</nav>
 	<div class="container">
-
             <?php
             	if($auth->hasIdentity()) {
             		echo $this->flashMessenger()->renderAll();
             	}
             	echo $this->content;
-
             ?>
             <hr>
 		<footer> </footer>

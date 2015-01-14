@@ -14,47 +14,6 @@ class PartyRadar extends AbstractOAuth2Client {
 		return $url;
 	}
 
-	/**
-	 * call
-	 *
-	 * @param string $method
-	 * @param string $api
-	 * @param string $params (optional)
-	 * @param array $additionalHeaders (optional)
-	 * @param array $postParams (optional)
-	 * @throws \Exception
-	 * @return Ambigous <\Zend\Json\mixed, NULL, \Zend\Json\$_tokenValue, multitype:, multitype:Ambigous <\Zend\Json\mixed, \Zend\Json\$_tokenValue, NULL> , stdClass, multitype:Ambigous <\Zend\Json\mixed, \Zend\Json\$_tokenValue, multitype:, multitype:Ambigous <\Zend\Json\mixed, \Zend\Json\$_tokenValue, NULL> , NULL> >
-	 *
-	 */
-	public function call($method, $api, $params = '', $additionalHeaders = array(), $postParams = null) {
-		if(!isset($this->session->token)) {
-			throw new \Exception('not authenticated for this action');
-		} else {
-			$stdHeader = array(
-				'Authorization' => 'Bearer ' . $this->session->token->access_token,
-				'Content-Type' => 'application/x-www-form-urlencoded'
-			);
-			if(count($additionalHeaders) > 0)
-				$headers = array_merge($stdHeader, $additionalHeaders);
-			else
-				$headers = $stdHeader;
-			$client = $this->getHttpclient()
-				->resetParameters(true)
-				->setHeaders($headers)
-				->setMethod($method)
-				->setUri($this->getUrl() . $api . '/' . $params);
-
-			if($postParams)
-				$client->setParameterPost($postParams);
-
-			//$retVal = $client->send()->getContent();
-			$send = $client->send();
-			$retVal = $send->getContent();
-			//print_r($retVal);
-			return \Zend\Json\Decoder::decode($retVal, \Zend\Json\Json::TYPE_ARRAY);
-		}
-	}
-
 	public function getToken(Request $request) {
 		if(isset($this->session->token)) {
 

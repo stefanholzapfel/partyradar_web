@@ -1,0 +1,55 @@
+<?php
+
+$title = 'PartyRadar Dashboard';
+
+$this->headTitle($title);
+
+?>
+<div class="jumbotron">
+	<?php
+		$auth = new Zend\Authentication\AuthenticationService();
+		$username = $auth->getStorage()->read()['Email'];
+	?>
+    <h1>Welcome to the PartyRadar Dashboard - <i><?php echo $username; ?></i></h1>
+</div>
+
+<div class="row">
+    <div class="col-xs-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Manage Locations</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+					<a class="btn btn-primary btn-block" href="<?php echo $this->url('party/location', array('action' => 'index'));?>">Go</a>
+				</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Manage Events</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+					<a class="btn btn-primary btn-block" href="<?php echo $this->url('party/event', array('action' => 'index'));?>">Go</a>
+				</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Manage Users</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+					<a class="btn btn-primary btn-block" href="<?php echo $this->url('party/user', array('action' => 'index'));?>">Go</a>
+				</p>
+            </div>
+        </div>
+    </div>
+</div>

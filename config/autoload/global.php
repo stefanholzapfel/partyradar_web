@@ -22,8 +22,8 @@ return array(
 	'navigation' => array(
 		'default' => array(
 			array(
-				'label' => 'Home',
-				'route' => 'home',
+				'label' => 'Dashboard',
+				'route' => 'party',
 			),
 			array(
 				'label' => 'Locations',
@@ -36,11 +36,6 @@ return array(
 			array(
 				'label' => 'User',
 				'route' => 'party/user',
-			),
-			array(
-				'label' => 'Logout',
-				'route' => 'auth',
-				'action' => 'logout'
 			),
 		),
 	),
