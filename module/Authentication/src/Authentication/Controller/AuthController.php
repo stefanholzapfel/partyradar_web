@@ -15,6 +15,9 @@ use Zend\Authentication\AuthenticationService;
 class AuthController extends AbstractActionController {
 
 	public function indexAction() {
+		$auth = new AuthenticationService();
+		if($auth->hasIdentity())
+			$this->redirect()->toRoute('home');
 		return array();
 	}
 
@@ -43,12 +46,8 @@ class AuthController extends AbstractActionController {
 	}
 
 	public function logoutAction() {
-		session_start();
-	    session_unset();
-	    session_destroy();
-	    session_write_close();
-	    setcookie(session_name(),'',0,'/');
-	    session_regenerate_id(true);
+		$auth = new AuthenticationService();
+		$auth->clearIdentity();
 		$this->redirect()->toRoute('auth');
 	}
 }
